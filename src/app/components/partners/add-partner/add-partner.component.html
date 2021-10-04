@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr style="text-align:center;">
+             <th>Name</th>
+             <th>Country</th>
+             <th>Zip code</th>
+             <th>Address line</th>
+             <th>Tax number</th>
+             <th>Ibans</th>
+             <th>Create</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+                <input class="form-control" [(ngModel)]="newPartner['name']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newPartner['address']['country']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newPartner['address']['zipCode']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newPartner['address']['line']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newPartner['taxNo']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newPartner['ibans']" type="text" placeholder="separate with ','">
+            </td>            
+            <td>
+                <button (click)="onCreateButtonClick()" class="btn" [class]="btnClass">
+                    Create
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

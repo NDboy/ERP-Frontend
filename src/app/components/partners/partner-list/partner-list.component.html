@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-12">
+
+      <div>
+        <jw-pagination [items]="partners" [pageSize]=20 [maxPages]=7 (changePage)="onChangePage($event)"></jw-pagination>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr style="text-align:center;">
+             <th (click)="onColumnSelect('id')">#</th>
+             <th (click)="onColumnSelect('name')">Name</th>
+             <th (click)="onColumnSelect('country')">Country</th>
+             <th (click)="onColumnSelect('zipCode')">Zip code</th>
+             <th (click)="onColumnSelect('line')">Address line</th>
+             <th (click)="onColumnSelect('taxNo')">Tax number</th>
+             <th (click)="onColumnSelect('ibans')">Ibans</th>
+             <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let partner of pageOfItems | filter:phraseString:['id','name','taxNo'] | sorter:columnKey">
+          <tr>
+            <td style="width: 5em; vertical-align: middle;">
+              {{ partner['id'] }}
+            </td>
+            <td>
+                <app-data-cell [data]="partner" [key]="'name'"></app-data-cell>
+            </td>
+            <td>
+                <app-address-data-cell [data]="partner" [key]="'country'"></app-address-data-cell>
+            </td>
+            <td>
+                <app-address-data-cell [data]="partner" [key]="'zipCode'"></app-address-data-cell>
+            </td>
+            <td>
+                <app-address-data-cell [data]="partner" [key]="'line'"></app-address-data-cell>
+            </td>
+            <td>
+                <app-data-cell [data]="partner" [key]="'taxNo'"></app-data-cell>
+            </td>
+            <td>
+                <app-data-cell [data]="partner" [key]="'ibans'"></app-data-cell>
+            </td>
+            <td>
+              <app-action-button-group 
+                (selectClick) = "onSelectButtonClick(partner)"
+                (updateClick) = "onUpdateButtonClick(partner)"
+                (deleteClick) = "onDeleteButtonClick(partner)">
+              </app-action-button-group>
+            </td>
+          </tr>
+          <tr *ngIf="isVisibleDetails && partner == selectedPartner">
+            <td colspan="11" class="green-details">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                             <th>A/P Invoice id:</th>
+                             <th>Invoice number:</th>
+                             <th>Status:</th>
+                             <th>Iban:</th>
+                             <th>Payment mode:</th>
+                             <th>Invoicing date:</th>
+                             <th>Due date:</th>
+                             <th>Currency:</th>
+                             <th>Net value:</th>
+                             <th>Vat total:</th>
+                             <th>Gross value:
+                              <fa-icon [icon]=iconClose (click)= "closeDetailsWindow()"></fa-icon>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let apinvoice of apinvoices">
+                          <tr>
+                            <td> {{ apinvoice['id'] }} </td>
+                            <td> {{ apinvoice['invNum'] }} </td>
+                            <td> {{ apinvoice['invoiceStatus'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['iban'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['paymentMode'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['invoicingDate'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['dueDate'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['invoiceCurrency'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['invoiceValues']['netValue'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['invoiceValues']['vatTotal'] }} </td>
+                            <td> {{ apinvoice['paymentModeAndDates']['invoiceValues']['grossValue'] }} </td>
+                          </tr>
+                        </tbody>
+                    </table>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

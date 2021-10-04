@@ -1,0 +1,191 @@
+<div class="row">
+    <div class="col-12">
+      <div style="margin: 0.3rem;">
+            <jw-pagination [items]="apinvoices" [pageSize]=15 [maxPages]=7 (changePage)="onChangePage($event)"></jw-pagination>
+      </div>  
+      <table class="table table-striped">
+        <thead>
+          <tr>
+             	<th (click)="onColumnSelect('id')">#</th>
+             	<th (click)="onColumnSelect('invNum')">Invoice number</th>
+             	<th (click)="onColumnSelect('invoiceStatus')">Status</th>
+             	<th (click)="onColumnSelect('invoicingDate')">Invoicing date</th>
+             	<th (click)="onColumnSelect('dueDate')">Due date</th>
+             	<th (click)="onColumnSelect('grossValue')">Currency</th>
+             	<th (click)="onColumnSelect('grossValue')">Gross value</th>
+             	<th (click)="onColumnSelect('partnerId')">Partner id</th>
+           	  <th (click)="onColumnSelect('partnerName')">Partner name</th>
+            	<th (click)="onColumnSelect('employeeId')">Partner iban</th>
+             	<th>Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let apinvoice of pageOfItems | filter:phraseString:['id','invNum','partnerId'] | sorter:columnKey"
+            class="hover-row" (click)="showInvoiceDetails(apinvoice)">
+          <tr>
+                <td>
+                    {{ apinvoice['id'] }}
+                </td>
+                <td>
+                    {{ apinvoice['invNum'] }}
+                </td>
+                <td>
+                    {{ apinvoice['invoiceStatus'] }}
+                </td>
+                <td>
+                    {{ apinvoice['paymentModeAndDates']['invoicingDate'] }}
+                </td>
+                <td>
+                    {{ apinvoice['paymentModeAndDates']['dueDate'] }}
+                </td>
+                <td>
+                    {{ apinvoice['paymentModeAndDates']['invoiceCurrency'] }}
+                </td>
+                <td>
+                    {{ apinvoice['paymentModeAndDates']['invoiceValues']['grossValue'] }}
+                </td>
+                <td>
+                    {{ apinvoice['partner']['id'] }}
+                </td>
+                <td>
+                    {{ apinvoice['partner']['name'] }}
+                </td>
+                <td>
+                    {{ apinvoice['paymentModeAndDates']['iban'] }}
+                </td>            
+                <td>
+                    <div class="btn-group">
+                        <button (click)="onDeleteButtonClick(apinvoice)" class="btn btn-danger" style="font-size: 1rem;">
+                            <fa-icon [icon]="deleteIcon"></fa-icon>                    
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="isVisibleDetails > 0 && currentApinvoice == apinvoice">
+              <td colspan="11">
+                <div class="grid-container ">
+                  <div class="item1">
+                      <table class="table table-striped">
+                          <thead>
+                            <tr>
+                               <th>Invoice number:</th>
+                               <th>Status:</th>
+                               <th>Employee id:</th>
+                               <th>Partner id:</th>
+                               <th>Partner iban:</th>
+                               <th>Partner name:</th>
+                               <th>Country:</th>
+                               <th>Zip code:</th>
+                               <th>Address line:</th>
+                               <th>Partner tax no.:</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td> {{ currentApinvoice['invNum'] }} </td>
+                              <td> {{ currentApinvoice['invoiceStatus'] }} </td>
+                              <td> {{ apinvoice['employee']['id'] }} </td>
+                              <td> {{ apinvoice['partner']['id'] }} </td>
+                              <td> {{ currentApinvoice['paymentModeAndDates']['iban'] }} </td>
+                              <td> {{ apinvoice['partner']['name'] }} </td>
+                              <td> {{ apinvoice['partner']['address']['country'] }} </td>
+                              <td> {{ apinvoice['partner']['address']['zipCode'] }} </td>
+                              <td> {{ apinvoice['partner']['address']['line'] }} </td>
+                              <td> {{ apinvoice['partner']['taxNo'] }} </td>
+                              <td> {{ currentPartner['taxNo'] }} </td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="item2">
+                      <table class="table table-striped">
+                          <tr>
+                              <td>Payment mode:</td>
+                              <td style="vertical-align: middle;">
+                                {{ currentApinvoice['paymentModeAndDates']['paymentMode'] }}
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>Invoicing date:</td>
+                              <td>
+                                {{ currentApinvoice['paymentModeAndDates']['invoicingDate'] }}
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>Due date:</td>
+                              <td>
+                                {{ currentApinvoice['paymentModeAndDates']['dueDate'] }}
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>Currency:</td>
+                              <td style="vertical-align: middle;">
+                                {{ currentApinvoice['paymentModeAndDates']['invoiceCurrency'] }}
+                              </td>
+                          </tr>
+                          <tr style="font-weight: bolder;">
+                              <td>Net value:</td>
+                              <td>{{ currentApinvoice['paymentModeAndDates']['invoiceValues']['netValue'] }}</td>
+                          </tr>
+                          <tr>
+                              <td>Vat rate</td>
+                              <td>Vat amount</td>
+                          </tr>
+                          <tr *ngFor="let vat of vatItems">
+                              <td>{{ vat['vatRate'] }} %</td>
+                              <td>{{ vat['vatAmount'] }}</td>
+                          </tr>
+                          <tr style="font-weight: bolder;">
+                              <td>Vat total:</td>
+                              <td>{{ currentApinvoice['paymentModeAndDates']['invoiceValues']['vatTotal'] }}</td>
+                          </tr>
+                          <tr style="font-weight: bolder;">
+                              <td>Gross value:</td>
+                              <td>{{ currentApinvoice['paymentModeAndDates']['invoiceValues']['grossValue'] }}</td>
+                          </tr>
+              
+                      </table>
+                  </div>
+                  <div class="item3">
+                      <table class="table table-striped">
+                          <thead>
+                              <tr>
+                                  <th>Item name:</th>
+                                  <th>Amount:</th>
+                                  <th>Net unit price:</th>
+                                  <th>Vat rate:</th>
+                                  <th>Vat amount:</th>
+                                  <th>Gross price:</th>
+                              </tr>
+                          </thead>
+                          <tbody>              
+                              <tr *ngFor="let it of invoiceRows">
+                                  <td>
+                                      {{ it['itemName'] }}
+                                  </td>
+                                  <td>
+                                      {{ it['amount'] }}
+                                  </td>
+                                  <td>
+                                      {{ it['netPrice'] }}
+                                  </td>
+                                  <td>
+                                      {{ it['vatRate'] }}
+                                  </td>
+                                  <td>
+                                      {{ it['vatAmount'] }}
+                                  </td>
+                                  <td>
+                                      {{ it['grossPrice'] }}
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>              
+                </div>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>

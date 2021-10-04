@@ -1,0 +1,98 @@
+<div class="container" style="margin: 30px;">
+    <div>
+        <h1>Röviden és tömören</h1>
+    </div>
+    <div>
+        <p>
+            Az alkalmazás egy vállalatirányítási rendszer már elkészült részeit és azok kapcsolatait hivatott bemutatni. 
+            A Partners és Employees modulban lehet rögzíteni és lekérdezni a vállalat partnereinek és alkalmazottainak adatait. Ezek szorosan kapcsolódnak az A/P invoice / Szállítói számla részhez,
+             melyek nélkül nem is kerülhet be számla a rendszerbe, emiatt egy-egy partnernél is megtekinthetőek a tőle befogadott számlák. 
+            A könyvelési rész fogja kezelni a számlákon végzett műveletek eredményét dátummal és számlaosztályokkal.
+        </p>
+    </div>
+</div>
+<div class="container" style="margin: 30px;">
+    <div>
+        <h1>Technikai tartalom</h1>
+    </div>
+    <div>
+        <p>
+            Célom volt, hogy az alkalmazás kisebb, egymástól függetlenül telepíthető részekből épüljön fel.
+             A webszerveren Docker keretrendszerben, 3 külön konténerben futó alkalmazás biztosítja a perzisztenciát, az üzleti logikát és a grafikus felhasználói felületet. 
+        </p>
+        <ul>
+           <li>
+               A futáshoz szükséges relációs adatbázis a MariaDB jelenlegi legfrissebb, 10.6-os Docker image-éből készült.
+           </li>
+           <li>
+              A backend réteget egy klasszikus Java Spring Boot alkalmazás valósítja meg. A Docker image az AdoptOpenJdk image-éből készült.
+              <ul>
+                 <li>
+                    Fejlesztő és build eszköz: Maven
+                 </li>
+                 <li>
+                    Adatbázis táblák létrehozása és verziókezelése: Flyway
+                 </li>
+                 <li>
+                    Adatbázis műveletek végrehajtása, a Java objektumok és az adatbázis rekordok közötti megfeleltetés: Spring Data Jpa
+                 </li>
+                 <li>
+                    Autentikáció és autorizáció: Spring Security
+                 </li>
+                 <li>
+                    Http kommunikáció fejlesztése és tesztelése: Swagger
+                 </li>
+                 <li>
+                    Fejlesztést segíti: Lombok, SonarLint, Git...
+                 </li>
+              </ul>
+           </li>
+           <li>
+              A grafikus felhasználói felület az Angular 12 keretrendszerben épül, és NGINX webkonténerben fut. 
+           </li>
+        </ul>
+    </div>
+</div>
+<div class="container" style="margin: 30px;">
+    <div>
+        <h1>Jelenlegi modulok</h1>
+    </div>
+    <div class="row">
+        <div class="col-8 col-md-6 col-lg-4 col-xl-3">
+            <div class="card mb-4 text-white bg-dark">
+               <img class="card-img-top" src="/assets/images/truck.jpg" alt="Card image cap" style="height: 180px;">
+               <div class="card-body" style="height: 200px;">
+                  <h5 class="card-title">PARTNERS</h5>
+                  <p class="card-text">Itt lehet rögzíteni és lekérdezni a cég partnereinek adatait. A partnerek adatai szerepelnek a szállítói számlákon.</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-8 col-md-6 col-lg-4 col-xl-3">
+            <div class="card mb-4 text-white bg-dark">
+               <img class="card-img-top" src="/assets/images/employees.jpg" alt="Card image cap" style="height: 180px;">
+               <div class="card-body" style="height: 200px;">
+                  <h5 class="card-title">EMPLOYEES</h5>
+                  <p class="card-text">Itt lehet rögzíteni és lekérdezni a cég alkalmazottainak adatait. Alkalmazottak tudnak szállítói számlákat rögzíteni, így kapcsolódnak a berögzített számlákhoz.</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-8 col-md-6 col-lg-4 col-xl-3">
+            <div class="card mb-4 text-white bg-dark">
+               <img class="card-img-top" src="/assets/images/old_invoice.jpg" alt="Card image cap" style="height: 180px;">
+               <div class="card-body" style="height: 200px;">
+                  <h5 class="card-title">A/P INVOICES</h5>
+                  <p class="card-text">Itt lehet rögzíteni - partnerrel és alkalmazottal - és lekérdezni a szállítói számlákat.</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-8 col-md-6 col-lg-4 col-xl-3">
+            <div class="card mb-4 text-white bg-dark">
+               <img class="card-img-top" src="/assets/images/accounting.jpg" alt="Card image cap" style="height: 180px;">
+               <div class="card-body" style="height: 200px;">
+                  <h5 class="card-title">ACCOUNTING</h5>
+                  <p class="card-text">Fejlesztés alatt</p>
+               </div>
+            </div>
+         </div>
+    </div>
+</div>

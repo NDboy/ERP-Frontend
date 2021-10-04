@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+             <th>First name</th>
+             <th>Last name</th>
+             <th>Status</th>
+             <th>Country</th>
+             <th>Zip code</th>
+             <th>Address line</th>
+             <th>Entry date</th>
+             <th>Create</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+                <input class="form-control" [(ngModel)]="newEmployee['firstName']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newEmployee['lastName']" type="text">
+            </td>
+            <td style="vertical-align: middle;">
+                <select [(ngModel)]="newEmployee['status']">
+                    <option *ngFor="let stat of statusArray" [ngValue]="stat">
+                         {{ stat }}
+                     </option>
+                </select>
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newEmployee['address']['country']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newEmployee['address']['zipCode']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newEmployee['address']['line']" type="text">
+            </td>
+            <td>
+                <input class="form-control" [(ngModel)]="newEmployee['entryDate']" type="date">
+            </td>                      
+            <td>
+                <button (click)="onCreateButtonClick()" class="btn" [class]="btnClass">
+                    Create
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

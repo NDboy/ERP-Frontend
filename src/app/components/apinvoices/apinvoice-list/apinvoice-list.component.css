@@ -1,0 +1,26 @@
+.hover-row:hover {background-color: #72f19d;;}
+
+.item1 {grid-area: header;}
+.item2 {grid-area: menu;}
+.item3 {grid-area: main;}
+/* .item4 {grid-area: right;}
+.item5 {grid-area: footer;} */
+
+.grid-container {
+    display: grid;
+    grid-template-areas: 
+        'header header header header header header'
+        'menu menu main main main main';
+
+    grid-gap: 5px;
+    background-color: aquamarine;
+    padding: 5px;
+}
+
+.grid-container > div {
+    background-color: rgb(107, 212, 125);
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+
+}

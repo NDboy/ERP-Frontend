@@ -1,0 +1,43 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              EMPLOYEES
+            </th>
+            <th>
+              <input (keyup)="onChangePhrase($event)" type="text" placeholder="Filter by id, first name or last name" size="30em">          
+            </th>
+            <th>
+              <div style="position:relative;">
+                <button class="btn btn-success" type="submit" style="position:absolute; right:0px; top: -34px;">Search</button>
+              </div>            
+            </th>
+          </tr>
+        </thead>
+    </table>
+</div>  
+    
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <app-add-employee
+                [newEmployee]="newEmployee"
+                (createClick)="onCreateButtonClick()">
+            </app-add-employee>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <app-employee-list
+                [phraseString]="phrase"
+                [employees]="employees"     
+                (selectClick)="selectButtonClick($event)"
+                (updateClick)="onUpdateButtonClick($event)"
+                (deleteClick)="onDeleteButtonClick($event)">
+            </app-employee-list>
+        </div>
+    </div>
+</div>
+  

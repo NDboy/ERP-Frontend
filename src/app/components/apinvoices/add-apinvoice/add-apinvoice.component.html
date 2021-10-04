@@ -1,0 +1,199 @@
+<div class="grid-container">
+    <div class="item1">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                 <th>Invoice number:</th>
+                 <th>Status:</th>
+                 <th>Employee id:</th>
+                 <th>
+                     Partner id:
+                 </th>
+                 <th></th>
+                 <th>Partner iban:</th>
+                 <th>Actions:</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    <input class="form-control" [(ngModel)]="newApinvoice['invNum']" type="text">
+                </td>
+                <td style="vertical-align: middle;">
+                    <select [(ngModel)]="newApinvoice['invoiceStatus']">
+                        <option *ngFor="let stat of statusArray" [ngValue]="stat">
+                             {{ stat }}
+                         </option>
+                    </select>
+                </td>
+                <td>
+                    <input class="form-control" [(ngModel)]="newApinvoice['employeeId']" type="text">
+                </td>
+                <td>
+                    <input class="form-control" 
+                            [(ngModel)]="partnerId" 
+                            type="text" 
+                            [ngStyle]="{'background-color': newApinvoice['partnerId']? '#5cb85c' : ''}">
+                </td>
+                <td>
+                    <button class="btn" (click)="onSearchPartnerButtonClick()">
+                        <fa-icon [icon]="searchIcon"></fa-icon>  
+                    </button>
+                    <fa-icon [icon]="foundIcon" *ngIf="isPartnerFound" style="color: darkgreen;"></fa-icon>                    
+                    <fa-icon [icon]="notFoundIcon" *ngIf="!isPartnerFound" style="color: red;"></fa-icon>
+                </td>
+                <td style="vertical-align: middle;" [ngStyle]="{'background-color': newApinvoice['partnerId']? '#5cb85c' : ''}">
+                    {{ iban }}
+                </td>                    
+                <td>
+                    <div class="btn-group">
+                        <button (click)="onAddPartnerModule()" class="btn btn-success" style="font-size: 0.7rem;">
+                            Add Partner
+                            <fa-icon [icon]="addIcon"></fa-icon>                    
+                        </button>
+                        <button (click)="onOpenAddPartnerModule()" class="btn" [class]="btnClass" style="font-size: 0.7rem;">
+                            New Partner
+                            <fa-icon [icon]="dropDownIcon"></fa-icon>                    
+                        </button>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+        <app-add-partner
+            *ngIf="isNewPartnerVisible > 0"
+            [newPartner]="newPartner"
+            (createClick)="onCreatePartnerButtonClick()">
+        </app-add-partner>
+    </div>
+    <div class="item2">
+        <table class="table table-striped">
+            <tr>
+                <td>Payment mode:</td>
+                <td style="vertical-align: middle;">
+                    <select [(ngModel)]="newApinvoice['paymentModeAndDates']['paymentMode']">
+                        <option *ngFor="let pay of payModArray" [ngValue]="pay">
+                             {{ pay }}
+                         </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Invoicing date:</td>
+                <td>
+                    <input class="form-control" [(ngModel)]="newApinvoice['paymentModeAndDates']['invoicingDate']" type="date">
+                </td>
+            </tr>
+            <tr>
+                <td>Due date:</td>
+                <td>
+                    <input class="form-control" [(ngModel)]="newApinvoice['paymentModeAndDates']['dueDate']" type="date">
+                </td>
+            </tr>
+            <tr>
+                <td>Currency:</td>
+                <td style="vertical-align: middle;">
+                    <select [(ngModel)]="newApinvoice['paymentModeAndDates']['invoiceCurrency']">
+                        <option *ngFor="let curr of currencyArray" [ngValue]="curr">
+                            {{ curr }}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr style="font-weight: bolder;">
+                <td>Net value:</td>
+                <td>{{ netValue }}</td>
+            </tr>
+            <tr>
+                <td>Vat rate</td>
+                <td>Vat amount</td>
+            </tr>
+            <tr *ngFor="let vat of vatItems">
+                <td>{{ vat['vatRate'] }} %</td>
+                <td>{{ vat['vatAmount'] }}</td>
+            </tr>
+            <tr style="font-weight: bolder;">
+                <td>Vat total:</td>
+                <td>{{ vatTotal }}</td>
+            </tr>
+            <tr style="font-weight: bolder;">
+                <td>Gross value:</td>
+                <td>{{ grossValue }}</td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="item3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item name:</th>
+                    <th>Amount:</th>
+                    <th>Net unit price:</th>
+                    <th>Vat rate:</th>
+                    <th>Vat amount:</th>
+                    <th>Gross price:</th>
+                    <th>Actions:</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let it of invoiceRows; let i = index">
+                    <td>
+                        {{ it['itemName'] }}
+                    </td>
+                    <td>
+                        {{ it['amount'] }}
+                    </td>
+                    <td>
+                        {{ it['netPrice'] }}
+                    </td>
+                    <td>
+                        {{ it['vatRate'] }}
+                    </td>
+                    <td>
+                        {{ it['vatAmount'] }}
+                    </td>
+                    <td>
+                        {{ it['grossPrice'] }}
+                    </td>
+                    <td>
+                        <fa-icon (click)="onDeleteInvoiceItemIconClick(i)" [icon]="minusIcon"></fa-icon>  
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" [(ngModel)]="initItemName">
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" [(ngModel)]="initAmount">
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" [(ngModel)]="initUnitPrice">
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" [(ngModel)]="initVatRate">
+                    </td>
+                    <td>
+                        {{ initVatAmount }}
+                    </td>
+                    <td>
+                        {{ initGrossPrice }}
+                    </td>
+                    <td>
+                        <div>
+                            <button class="btn" (click)="onAddInvoiceItemIconClick()">
+                                <fa-icon [icon]="addIcon"></fa-icon>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button (click)="onCreateButtonClick()" class="btn btn-success" style="font-size: 1rem;">
+                Create Invoice
+                <fa-icon [icon]="addIcon"></fa-icon>                    
+        </button>
+    </div>
+
+</div>

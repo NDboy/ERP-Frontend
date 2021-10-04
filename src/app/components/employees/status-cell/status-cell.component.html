@@ -1,0 +1,5 @@
+<select [(ngModel)]="data[key]">
+    <option *ngFor="let st of statusArray" [ngValue]="st">
+         {{ st }}
+    </option>
+</select>

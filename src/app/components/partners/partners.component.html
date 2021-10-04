@@ -1,0 +1,42 @@
+<div class="container">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+            PARTNERS
+          </th>
+          <th>
+            <input (keyup)="onChangePhrase($event)" type="text" placeholder="Filter by id, name or tax number" size="30em">          
+          </th>
+          <th>
+            <div style="position:relative;">
+              <button class="btn btn-success" type="submit" style="position:absolute; right:0px; top: -34px;">Search</button>
+            </div>            
+          </th>
+        </tr>
+      </thead>
+  </table>
+</div>
+
+  
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <app-add-partner
+          [newPartner]="newPartner"
+          (createClick)="onCreateButtonClick()">
+        </app-add-partner>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+          <app-partner-list
+            [phraseString]="phrase"
+            [partners]="partners"     
+            (selectClick)="selectButtonClick($event)"
+            (updateClick)="onUpdateButtonClick($event)"
+            (deleteClick)="onDeleteButtonClick($event)">
+          </app-partner-list>
+        </div>
+    </div>
+</div>

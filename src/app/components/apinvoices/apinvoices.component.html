@@ -1,0 +1,49 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              A/P INVOICES
+            </th>
+            <th>
+              <input (keyup)="onChangePhrase($event)" type="text" placeholder="Filter by id, invoice number or partner id" size="35em">          
+            </th>
+            <th style="position: relative; text-align:right;">
+              <div class="btn-group">
+                <button class="btn btn-success" type="submit">
+                  Search
+                  <fa-icon [icon]="searchIcon"></fa-icon>
+                </button>
+                <button class="btn btn-info" (click)="openNewInvoiceModule()">
+                  New Invoice
+                  <fa-icon [icon]="caretDownIcon"></fa-icon>
+                </button>
+              </div>            
+            </th>
+          </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="container" *ngIf="isVisibleNewInvoiceModule > 0">
+    <app-add-apinvoice
+      [newApinvoice]="newApinvoice"
+      (createClick)="onListRefreshOnCreate()">
+    </app-add-apinvoice>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <app-apinvoice-list
+                [phraseString]="phrase"
+                [apinvoices]="apinvoices"     
+                (selectClick)="selectButtonClick($event)"
+                (updateClick)="onUpdateButtonClick($event)"
+                (deleteClick)="onDeleteButtonClick($event)">
+            </app-apinvoice-list>
+        </div>
+    </div>
+</div>
+  

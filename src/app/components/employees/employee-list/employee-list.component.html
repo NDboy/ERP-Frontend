@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-12">
+
+      <div>
+        <jw-pagination [items]="employees" [pageSize]=20 [maxPages]=7 (changePage)="onChangePage($event)" style="text-align: center;"></jw-pagination>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr role="button">
+             <th (click)="onColumnSelect('id')">#</th>
+             <th (click)="onColumnSelect('firstName')">First name</th>
+             <th (click)="onColumnSelect('lastName')">Last name</th>
+             <th (click)="onColumnSelect('status')">Status</th>
+             <th (click)="onColumnSelect('country')">Country</th>
+             <th (click)="onColumnSelect('zipCode')">Zip code</th>
+             <th (click)="onColumnSelect('line')">Address line</th>
+             <th (click)="onColumnSelect('entryDate')">Entry date</th>
+             <th (click)="onColumnSelect('apinvoices')">A/P Invoices</th>
+             <th (click)="onColumnSelect('accountings')">Accountings</th>
+             <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of pageOfItems | filter:phraseString:['id','firstName','lastName'] | sorter:columnKey" >
+            <td style="width: 6.5em; vertical-align: middle;">
+              {{ employee['id'] }}
+            </td>
+            <td>
+                <app-data-cell [data]="employee" [key]="'firstName'"></app-data-cell>
+            </td>
+            <td>
+                <app-data-cell [data]="employee" [key]="'lastName'"></app-data-cell>
+            </td>
+            <td style="vertical-align: middle;">
+                <app-status-cell [data]="employee" [key]="'status'"></app-status-cell>
+            </td>
+            <td>
+                <app-address-data-cell [data]="employee" [key]="'country'"></app-address-data-cell>
+            </td>
+            <td>
+                <app-address-data-cell [data]="employee" [key]="'zipCode'"></app-address-data-cell>
+            </td>
+            <td>
+                <app-address-data-cell [data]="employee" [key]="'line'"></app-address-data-cell>
+            </td>
+            <td>
+                <app-date-data-cell [data]="employee" [key]="'entryDate'"></app-date-data-cell>
+            </td>
+            <td>
+                <app-data-cell [data]="employee" [key]="'apinvoices'"></app-data-cell>
+            </td>
+            <td>
+                <app-data-cell [data]="employee" [key]="'accountings'"></app-data-cell>
+            </td>
+
+            <td>
+              <app-action-button-group 
+                (selectClick) = "onSelectButtonClick(employee)"
+                (updateClick) = "onUpdateButtonClick(employee)"
+                (deleteClick) = "onDeleteButtonClick(employee)">
+              </app-action-button-group>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--
+        <div class="col-3 pt-5">
+          <app-employee-detail [employee]="currentEmployee" (delUser)="onDeleteEmployeeInDetailElement()"></app-employee-detail>
+        </div>
+    -->
+</div>
