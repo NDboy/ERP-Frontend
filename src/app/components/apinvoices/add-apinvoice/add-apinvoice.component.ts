@@ -136,7 +136,7 @@ export class AddApinvoiceComponent implements OnInit {
   }
 
   onAddInvoiceItemIconClick(): void {
-    if(this.initItemName && this.initUnitPrice && this.initVatRate && this.initAmount) {
+    if(this.initItemName && /*this.initUnitPrice && this.initVatRate &&*/ this.initAmount) {
       let invRow = new InvoiceRow(this.initItemName, this.initUnitPrice, this.initVatRate, this.initAmount);
       this.invoiceRows.push(invRow);
       this.netValue += invRow.netPrice * invRow.amount;
@@ -147,6 +147,7 @@ export class AddApinvoiceComponent implements OnInit {
   }
 
   addInvoiceRowsToInvoiceItems(): void {
+    this.newApinvoice.invoiceItems = [];
     for (let i = 0; i < this.invoiceRows.length; i++) {
       for (let j = 0; j < this.invoiceRows[i].amount; j++) {
         let item = new Invoiceitem( this.invoiceRows[i].itemName, 

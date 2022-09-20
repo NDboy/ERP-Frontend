@@ -8,7 +8,7 @@ export class InvoiceRow {
     amount: number = 0;
 
     constructor(itemName:string, netPrice:number, vatRate:number, amount:number){
-        if(itemName && netPrice && vatRate) {
+        if(itemName) {
             this.itemName = itemName || '';
             this.netPrice = netPrice || 0;
             this.vatRate = vatRate || 0;
